@@ -15,6 +15,12 @@
                    [(bsValue)]="bsValue"
                    (bsValueChange)="onValueChange($event)">
           </div>
+          <div class="col">
+            <button class="btn btn-primary animation-on-hover" (click)="exportAsXLSX()">
+              <i class="tim-icons icon-cloud-download-93"></i>
+                Download Excel
+            </button>
+          </div>
           <div id="HRReport" class="card">
             <div class=" card-body">
               <div class=" table-responsive">
@@ -35,7 +41,7 @@
                       <td scope="row">{{ i + 1 }}</td>
                       <td> {{bill.MobileData.employee.name}}</td>
                       <td> {{bill.MobileData.employee.HrCode}}</td>
-                      <td> {{bill.MobileData.Branch.name}}</td>
+                      <td> {{bill.MobileData.employee.branch.name}} </td>
                       <td> {{bill.MobileData.mobileNumber}}</td>
                       <td> {{bill.TotalAfterTax}}</td>
                       <td> {{bill.MobileData.provider.name}}</td>

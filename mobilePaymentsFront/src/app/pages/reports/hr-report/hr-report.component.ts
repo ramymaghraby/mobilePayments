@@ -4,9 +4,8 @@ import { MobileNumberDataService } from '@services/mobile-number-data.service';
 import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepicker';
 import { BillDetailsModel } from '@models/bill-data-model';
 import { MobileNumbersDataModel } from '@models/mobile-numbers-data-model';
-import { BranchService } from '@services/branch.service';
-import { BranchModel } from '@models/branch-model';
 import { BillModel } from '@models/bill-model';
+import { ExcelService } from '@services/excel.service';
 
 @Component({
   selector: 'app-hr-report',
@@ -14,7 +13,7 @@ import { BillModel } from '@models/bill-model';
 })
 export class HrReportComponent implements OnInit {
 
-  bills: BillDetailsModel[] = [] ;
+  bills: BillDetailsModel[] = [new BillDetailsModel()] ;
   date: Date = new Date();
   bsValue: Date = new Date(this.date.getFullYear(), 0);
   minMode: BsDatepickerViewMode = 'month';
@@ -23,7 +22,7 @@ export class HrReportComponent implements OnInit {
   constructor(
     private BillService: BillsService,
     private MobileNumberService: MobileNumberDataService,
-    private BranchSrv: BranchService
+    private excelService: ExcelService
   ) {
     this.bsConfig = Object.assign({}, {
       minMode : this.minMode,
@@ -38,18 +37,15 @@ export class HrReportComponent implements OnInit {
   onValueChange(value: Date): void {
     this.date = value;
     this.bills = [];
-    console.log('ValueChange');
     this.getBillsByChoosenDate(this.date);
   }
 
   getBillsByChoosenDate(choosedDate: Date) {
-    return this.BillService.getBillsByDate(choosedDate).subscribe((allBills: any[]) => {
-      console.log(allBills);
+    return this.BillService.getBillsByDate(choosedDate).subscribe((allBills: BillModel[]) => {
       let i = 0;
       allBills.forEach((billEle: BillModel) => {
-        this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe((MobileData: MobileNumbersDataModel) => {
+        this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe( (MobileData: MobileNumbersDataModel) => {
           allBills[i].MobileData = MobileData;
-          allBills[i].MobileData;
           i++;
           if (i === allBills.length) {
             this.bills = allBills;
@@ -57,6 +53,25 @@ export class HrReportComponent implements OnInit {
         });
       });
     });
+  }
+
+  exportAsXLSX(): void {
+    const excel: BillDetailsModel[] = this.bills;
+    excel.forEach(bill => {
+      bill.employeename = bill.MobileData.employee.name;
+      bill.HrCode = bill.MobileData.employee.HrCode;
+      bill.Branch = bill.MobileData.employee.branch.name;
+      bill.MobileNumber = bill.MobileData.mobileNumber;
+      bill.Total = bill.TotalAfterTax;
+      bill.Provider = bill.MobileData.provider.name;
+      // delete bill.MobileData;
+      delete bill.IntlCharge;
+      delete bill.RoamCharge;
+      delete bill.mobileNumberId;
+      delete bill.month;
+      console.log(bill);
+    });
+    this.excelService.exportAsExcelFile(excel, 'HR_Report_');
   }
 
 }

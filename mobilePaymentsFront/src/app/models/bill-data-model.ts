@@ -1,9 +1,20 @@
-export interface BillDetailsModel {
+import { MobileNumbersDataModel } from './mobile-numbers-data-model';
+
+export class BillDetailsModel {
+  constructor() {
+  }
 id?: any;
 employeename?: string;
-MobileNumber?: number;
+MobileNumber?: string;
 acctNo?: string;
-intlCharge?: number;
-roamCharge?: number;
-totalWTax?: number;
+MobileData?: MobileNumbersDataModel;
+HrCode?: string;
+Branch?: string;
+Provider?: string;
+IntlCharge?: number;
+RoamCharge?: number;
+TotalAfterTax?: number;
+mobileNumberId?: number;
+month?: Date;
+Total?: number;
 }

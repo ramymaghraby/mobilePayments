@@ -154,10 +154,14 @@ export class MobileNumberController {
       include: [
         {relation: 'vodafoneAccount'},
         {relation: 'ratePlan'},
-        {relation: 'employee'},
+        {relation: 'employee',
+        scope: {
+          include: [{relation: 'branch'}]
+        }
+      },
         {relation: 'deptCode'},
         {relation: 'accountPaymentType'},
-        {relation: 'provider'},
+        {relation: 'provider'}
       ],
     };
     return this.mobileNumberRepository.findById(id, filter);

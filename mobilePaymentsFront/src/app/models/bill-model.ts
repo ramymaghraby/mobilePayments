@@ -1,3 +1,5 @@
+import { MobileNumbersDataModel } from './mobile-numbers-data-model';
+
 export class BillModel {
   constructor() {
   }
@@ -7,4 +9,5 @@ export class BillModel {
   RoamCharge: number;
   TotalAfterTax: number;
   mobileNumberId: number;
+  MobileData: MobileNumbersDataModel;
 }

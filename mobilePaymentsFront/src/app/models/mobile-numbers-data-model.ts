@@ -34,6 +34,6 @@ export class MobileNumbersDataModel {
   providerId: number;
   ServiceProvider: string;
   provider: ServiceProviderModel;
-  Branch: BranchModel;
+  branch: BranchModel;
 }
 

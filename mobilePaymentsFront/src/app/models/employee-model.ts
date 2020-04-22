@@ -1,3 +1,5 @@
+import { BranchModel } from './branch-model';
+
 export class EmployeeModel {
 
   constructor() {  }
@@ -7,4 +9,5 @@ export class EmployeeModel {
   HrCode: string;
   deptId: number;
   branchId: number;
+  branch?: BranchModel;
 }
