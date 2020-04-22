@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-6">
+        <input matInput (keyup)="applyFilterEmployee($event.target.value)" placeholder="Employee Filter">
+      </div>
+      <div class="col-4">
+        <button class="btn btn-primary animation-on-hover" (click)="addEmployee()">
+          <i class="tim-icons icon-simple-add"></i>
+            Add Employee
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <table class="table" mat-table *ngIf="employees" [dataSource]="dataSource">
+        <!-- Index Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> # </th>
+          <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+        </ng-container>
+        <!-- Employee Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Employee Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+        <!-- HR Code Column -->
+        <ng-container matColumnDef="HrCode">
+          <th mat-header-cell *matHeaderCellDef> HR Code </th>
+          <td mat-cell *matCellDef="let row"> {{row.HrCode}} </td>
+        </ng-container>
+        <!-- Department Column -->
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef> Department </th>
+          <td mat-cell *matCellDef="let row"> {{row.dept.name}} </td>
+        </ng-container>
+        <!-- Branch Column -->
+        <ng-container matColumnDef="branch">
+          <th mat-header-cell *matHeaderCellDef> Branch </th>
+          <td mat-cell *matCellDef="let row"> {{row.branch.name}} </td>
+        </ng-container>
+         <!-- Actions Column -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td class="td-actions" mat-cell *matCellDef="let row">
+            <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" (click)="editEmployee(row)">
+              <i class="tim-icons icon-settings"></i>
+            </button>
+            <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" (click)="deleteEmployee(row)">
+              <i class="tim-icons icon-simple-remove"></i>
+            </button>
+          </td>
+        </ng-container><tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
+</div>

@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <div class="col-md-1"></div>
+      <div class="col">
+        <input matInput (keyup)="applyFilterDeptCode($event.target.value)" placeholder="Dept Code Filter">
+      </div>
+
+      <div class="col">
+        <button class="btn btn-primary animation-on-hover" (click)="addDeptCode()">
+          <i class="tim-icons icon-simple-add"></i>
+            Add Dept Code
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table" mat-table *ngIf="deptCodes" [dataSource]="dataSource" >
+
+        <!-- Index Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> # </th>
+          <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+        </ng-container>
+
+        <!-- Acconut No. Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef> Dept Code </th>
+          <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+        </ng-container>
+
+         <!-- Actions Column -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td class="td-actions" mat-cell *matCellDef="let row">
+            <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" (click)="editDeptCode(row)">
+              <i class="tim-icons icon-settings"></i>
+            </button>
+            <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" (click)="deleteDeptCode(row)">
+              <i class="tim-icons icon-simple-remove"></i>
+            </button>
+          </td>
+        </ng-container><tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
+</div>

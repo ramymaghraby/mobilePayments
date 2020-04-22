@@ -1,0 +1,57 @@
+<div class="card">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" card-title">HR Report</h4>
+        </div>
+        <div class="row card-body">
+          <div class="col-xs-12 col-12 col-md-4 form-group">
+            <input type="text"
+                   class="form-control"
+                   [bsConfig]="bsConfig"
+                   #dp="bsDatepicker"
+                   bsDatepicker
+                   [(bsValue)]="bsValue"
+                   (bsValueChange)="onValueChange($event)">
+          </div>
+          <div class="col-xs-12 col-12 col-md-3 form-group">
+            <button class="btn btn-success" (click)="dp.toggle()" type="button">Date Picker</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary" (click)="export()"> Download Excel</button>
+          </div>
+          <div id="HRReport" class="card">
+            <div class=" card-body">
+              <div class=" table-responsive">
+                <table  class="table tablesorter" id="">
+                  <thead class=" text-primary">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Employee Name</th>
+                      <th scope="col">HR Code</th>
+                      <th scope="col">Location</th>
+                      <th scope="col">Mobile Number</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Provider</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bill of bills; let i=index">
+                      <td scope="row">{{ i + 1 }}</td>
+                      <td> {{bill.MobileData.employee.name}}</td>
+                      <td> {{bill.MobileData.employee.HrCode}}</td>
+                      <td> {{bill.MobileData.employee.branchId}}</td>
+                      <td> {{bill.MobileData.mobileNumber}}</td>
+                      <td> {{bill.TotalAfterTax}}</td>
+                      <td> {{bill.MobileData.provider.name}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

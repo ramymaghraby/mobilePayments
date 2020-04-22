@@ -1,0 +1,29 @@
+<div class="content">
+  <div class=" row">
+    <div class="card">
+      <div mat-dialog-title class=" card-header">
+        <h3 class="card-title"> Service Provider Details</h3>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Service Provider Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input matInput [(ngModel)]="data.name"></td>
+              <td>
+                <div mat-dialog-actions>
+                  <button mat-button type="button" class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+                  <button mat-button type="button" class="btn btn-info" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

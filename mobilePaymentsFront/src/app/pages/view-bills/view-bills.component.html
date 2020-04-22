@@ -1,0 +1,46 @@
+<div class=" content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" card-title">Bill View</h4>
+        </div>
+        <div class="row card-body">
+          <div class="col">
+            <input matInput (dateInput)="onDateChange($event.value)" [matDatepicker]="picker"
+              placeholder="Choose a date" [(ngModel)]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+          <div class=" card-body">
+            <div class=" table-responsive">
+              <table class=" table tablesorter" id="" matSort (matSortChange)="sortData($event)">
+                <thead class=" text-primary">
+                  <tr>
+                    <th class=" text-center" scope="col">#</th>
+                    <th class=" text-left" scope="col" mat-sort-header="employeename">Employee Name</th>
+                    <th class=" text-center" scope="col" mat-sort-header="mobNo">Mobile No.</th>
+                    <th class=" text-center" scope="col" mat-sort-header="acctNo">Account No.</th>
+                    <th class=" text-center" scope="col" mat-sort-header="intCharge">International<br> Charge</th>
+                    <th class=" text-center" scope="col" mat-sort-header="roamCharge">Roaming <br> Charge</th>
+                    <th scope="col" class=" text-center" mat-sort-header="total">Total Bill <br> After Tax</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let bill of bills; let i=index">
+                    <td scope="row">{{ i + 1 }}</td>
+                    <td> {{bill.MobileData.employee.name}}</td>
+                    <td> {{bill.MobileData.mobileNumber}}</td>
+                    <td> {{bill.MobileData.vodafoneAccount.accountNumber}}</td>
+                    <td> {{bill.IntlCharge}}</td>
+                    <td> {{bill.RoamCharge}}</td>
+                    <td> {{bill.TotalAfterTax}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

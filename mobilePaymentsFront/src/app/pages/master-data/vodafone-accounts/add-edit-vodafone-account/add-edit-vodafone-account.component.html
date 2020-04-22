@@ -1,0 +1,31 @@
+<div class="content">
+  <div class=" row">
+    <div class="card">
+      <div mat-dialog-title class=" card-header">
+        <h3 class="card-title">Vodafone Account Details</h3>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Account No.</th>
+              <th>Account Description</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input matInput [(ngModel)]="data.accountNumber"></td>
+              <td><input matInput [(ngModel)]="data.accountDesc"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div mat-dialog-actions>
+          <button mat-button type="button" class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+          <button mat-button type="button" class="btn btn-info" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

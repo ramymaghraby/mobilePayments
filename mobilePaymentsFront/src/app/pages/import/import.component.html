@@ -1,0 +1,162 @@
+<div class="content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" card-title">Import Bill</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <a href='assets/BillsTemplate.xls' download>
+                Download template here
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-12 col-md-4 form-group">
+              <input type="text"
+                     class="form-control"
+                     [bsConfig]="bsConfig"
+                     #dp="bsDatepicker"
+                     bsDatepicker
+                     [(bsValue)]="bsValue"
+                     (bsValueChange)="onValueChange($event)">
+            </div>
+            <!-- <div class="col-md-3">
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="month">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [(ngModel)]="month" ngDefaultControl></mat-datepicker>
+            </div> -->
+            <div class="col-md-3">
+              <input type="file" class="form-control" (change)="uploadedFile($event)" placeholder="Upload file"
+                accept=".xls,.xlsx" name="Choose">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-danger" [disabled]="missingNumbersinDB.length==0" (click)="validateMobileNumbers()">
+                <i class="tim-icons icon-refresh-02"></i>
+                Re-Validate
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-danger" [disabled]="missingNumbersinDB.length>0 && importData.length>0" (click)="submitBillsToDb()">
+                <i class="tim-icons icon-upload"></i>
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p>
+            <input matInput (keyup)="applyFilterAccount($event.target.value)" placeholder="Account Number Filter">
+          </p>
+        </div>
+        <div class="col">
+          <p>
+            <input matInput (keyup)="applyFilterMobile($event.target.value)" placeholder="Mobile Number Filter">
+          </p>
+        </div>
+        <div class="col">
+          <p> Filter Total: {{ filterTotal | currency:'EGP ' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="missingNumbersinDB.length>0" class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p id="missingFromDb"> The Following {{missingNumbersinDB.length}} Numbers are not registered in the system, please register them and Re-Validate</p>
+        </div>
+      </div>
+      <table class="table" id="missingTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mobile No.</th>
+            <th>Account No.</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mobNum of missingNumbersinDB; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{mobNum.MobileNumber}}</td>
+            <td>{{mobNum.AccountNo}} </td>
+            <td class="td-actions">
+              <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" (click)="addNewNumber(mobNum)">
+                <i class="tim-icons icon-bullet-list-67"></i>
+              </button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <table class="table" mat-table *ngIf="importData" [dataSource]="dataSource" >
+
+            <!-- Index Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+            </ng-container>
+
+            <!-- Acconut No. Column -->
+            <ng-container matColumnDef="AccountNo">
+              <th mat-header-cell *matHeaderCellDef> Account No. </th>
+              <td mat-cell *matCellDef="let row"> {{row.AccountNo}} </td>
+            </ng-container>
+
+            <!-- Mobile Number Column -->
+            <ng-container matColumnDef="MobileNumber">
+              <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+              <td mat-cell *matCellDef="let row"> {{row.MobileNumber}} </td>
+            </ng-container>
+
+            <!-- International Charge Column -->
+            <ng-container matColumnDef="InternationalCharge">
+              <th mat-header-cell *matHeaderCellDef> International <br> Charge </th>
+              <td mat-cell *matCellDef="let row"> {{row.InternationalCharge | currency:'EGP '}} </td>
+            </ng-container>
+
+            <!-- Roaming Charge Column -->
+            <ng-container matColumnDef="RoamingCharge">
+              <th mat-header-cell *matHeaderCellDef> Roaming <br> Charge </th>
+              <td mat-cell *matCellDef="let row"> {{row.RoamingCharge | currency:'EGP '}} </td>
+            </ng-container>
+            <!-- Total Charge Column -->
+            <ng-container matColumnDef="TotalChargeAfterTax">
+              <th mat-header-cell *matHeaderCellDef> Total After <br> Tax </th>
+              <td mat-cell *matCellDef="let row"> {{row.TotalChargeAfterTax | currency:'EGP '}} </td>
+            </ng-container>
+             <!-- Actions Column -->
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef> Actions</th>
+              <td class="td-actions" mat-cell *matCellDef="let row">
+                <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" (click)="editBill(row)">
+                  <i class="tim-icons icon-settings"></i>
+                </button>
+                <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" (click)="deleteBill(row)">
+                  <i class="tim-icons icon-simple-remove"></i>
+                </button>
+              </td>
+            </ng-container><tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+          </table>
+        </div>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

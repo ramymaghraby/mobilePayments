@@ -1,0 +1,57 @@
+  <div class="card">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-md-1"></div>
+        <div class="col">
+          <input matInput (keyup)="applyFilterVodafoneAccount($event.target.value)" placeholder="Account Number Filter">
+        </div>
+        <div class="col">
+          <input matInput (keyup)="applyFilterAccountDescription($event.target.value)" placeholder="Account Desc. Filter">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary animation-on-hover" (click)="addVodafoneAccount()">
+            <i class="tim-icons icon-simple-add"></i>
+              Add Account
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table" mat-table *ngIf="vodafoneAccounts" [dataSource]="dataSource" >
+
+          <!-- Index Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let row; let i = index"> {{i+1}} </td>
+          </ng-container>
+
+          <!-- Acconut No. Column -->
+          <ng-container matColumnDef="accountNumber">
+            <th mat-header-cell *matHeaderCellDef> Account Number </th>
+            <td mat-cell *matCellDef="let row"> {{row.accountNumber}} </td>
+          </ng-container>
+
+          <!-- Mobile Number Column -->
+          <ng-container matColumnDef="accountDesc">
+            <th mat-header-cell *matHeaderCellDef> Account Description </th>
+            <td mat-cell *matCellDef="let row"> {{row.accountDesc}} </td>
+          </ng-container>
+
+           <!-- Actions Column -->
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef> Actions</th>
+            <td class="td-actions" mat-cell *matCellDef="let row">
+              <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" (click)="editVodafoneAccount(row)">
+                <i class="tim-icons icon-settings"></i>
+              </button>
+              <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" (click)="deleteVodafoneAccount(row)">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </td>
+          </ng-container><tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+          </tr>
+        </table>
+      </div>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
+  </div>

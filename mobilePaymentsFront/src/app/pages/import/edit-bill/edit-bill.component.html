@@ -1,0 +1,36 @@
+  <div class="content">
+    <div class=" row">
+      <div class="card">
+        <div mat-dialog-title class=" card-header">
+          <h3 class="card-title">Edit this Bill Details</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Account No.</th>
+                <th> Mobile No.</th>
+                <th>International<br>Charge</th>
+                <th>Roaming<br>Charge</th>
+                <th>Total Charge <br>After Tax</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input matInput [(ngModel)]="data.AccountNo"></td>
+                <td><input matInput [(ngModel)]="data.MobileNumber" disabled="true"></td>
+                <td><input matInput [(ngModel)]="data.InternationalCharge"></td>
+                <td><input matInput [(ngModel)]="data.RoamingCharge"></td>
+                <td><input matInput [(ngModel)]="data.TotalChargeAfterTax"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div mat-dialog-actions>
+            <button mat-button type="button" class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+            <button mat-button type="button" class="btn btn-info" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
