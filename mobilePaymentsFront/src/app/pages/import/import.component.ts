@@ -12,7 +12,7 @@ import { VodafoneAccountModel } from '@models/vodafone-account-model';
 import { ToastrService } from 'ngx-toastr';
 // tslint:disable-next-line: max-line-length
 import { AddEditMobileNumberComponent } from '@masterData/mobile-numbers/add-edit-mobile-number/add-edit-mobile-number.component';
-import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepicker/public_api';
+import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-import',

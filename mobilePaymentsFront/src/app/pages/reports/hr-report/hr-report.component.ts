@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BillsService } from '@services/bills.service';
 import { MobileNumberDataService } from '@services/mobile-number-data.service';
-import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepicker/public_api';
+import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepicker';
 import { BillDetailsModel } from '@models/bill-data-model';
-import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { MobileNumbersDataModel } from '@models/mobile-numbers-data-model';
+import { BranchService } from '@services/branch.service';
+import { BranchModel } from '@models/branch-model';
+import { BillModel } from '@models/bill-model';
 
 @Component({
   selector: 'app-hr-report',
@@ -17,15 +20,10 @@ export class HrReportComponent implements OnInit {
   minMode: BsDatepickerViewMode = 'month';
   bsConfig: Partial<BsDatepickerConfig>;
 
-  exportAsConfig: ExportAsConfig = {
-    type: 'pdf', // the type you want to download
-    elementId: 'HRReport', // the id of html/table element
-  };
-
   constructor(
     private BillService: BillsService,
     private MobileNumberService: MobileNumberDataService,
-    private exportAsService: ExportAsService
+    private BranchSrv: BranchService
   ) {
     this.bsConfig = Object.assign({}, {
       minMode : this.minMode,
@@ -35,13 +33,6 @@ export class HrReportComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  export() {
-    // download the file using old school javascript method
-    this.exportAsService.save(this.exportAsConfig, 'Mobiles-HR').subscribe(() => {
-      // save started
-    });
   }
 
   onValueChange(value: Date): void {
@@ -55,10 +46,10 @@ export class HrReportComponent implements OnInit {
     return this.BillService.getBillsByDate(choosedDate).subscribe((allBills: any[]) => {
       console.log(allBills);
       let i = 0;
-      allBills.forEach(billEle => {
-        const mobileid = billEle.mobileNumberId;
-        this.MobileNumberService.getMobileNumberData(mobileid).subscribe(MobileData => {
+      allBills.forEach((billEle: BillModel) => {
+        this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe((MobileData: MobileNumbersDataModel) => {
           allBills[i].MobileData = MobileData;
+          allBills[i].MobileData;
           i++;
           if (i === allBills.length) {
             this.bills = allBills;

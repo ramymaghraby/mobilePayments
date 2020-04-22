@@ -8,7 +8,9 @@ import { MobileNumbersModel } from '@models/mobile-numbers-model';
 })
 export class MobileNumberDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+    ) { }
 
   getMobileNumberData(id) {
     return this.http.get(environment.api + 'mobile-numbers/' + id);

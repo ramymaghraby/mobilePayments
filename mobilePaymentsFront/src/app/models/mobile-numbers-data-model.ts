@@ -4,6 +4,7 @@ import { EmployeeModel } from './employee-model';
 import { DeptCodeModel } from './dept-code-model';
 import {AccountPaymentTypeModel} from './account-payment-type-model';
 import { ServiceProviderModel } from './service-provider-model';
+import { BranchModel } from './branch-model';
 
 export class MobileNumbersDataModel {
 
@@ -33,5 +34,6 @@ export class MobileNumbersDataModel {
   providerId: number;
   ServiceProvider: string;
   provider: ServiceProviderModel;
+  Branch: BranchModel;
 }
 

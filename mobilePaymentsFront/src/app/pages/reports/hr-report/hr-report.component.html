@@ -6,7 +6,7 @@
           <h4 class=" card-title">HR Report</h4>
         </div>
         <div class="row card-body">
-          <div class="col-xs-12 col-12 col-md-4 form-group">
+          <div class="col-md-2 form-group">
             <input type="text"
                    class="form-control"
                    [bsConfig]="bsConfig"
@@ -14,12 +14,6 @@
                    bsDatepicker
                    [(bsValue)]="bsValue"
                    (bsValueChange)="onValueChange($event)">
-          </div>
-          <div class="col-xs-12 col-12 col-md-3 form-group">
-            <button class="btn btn-success" (click)="dp.toggle()" type="button">Date Picker</button>
-          </div>
-          <div class="col">
-            <button class="btn btn-primary" (click)="export()"> Download Excel</button>
           </div>
           <div id="HRReport" class="card">
             <div class=" card-body">
@@ -41,7 +35,7 @@
                       <td scope="row">{{ i + 1 }}</td>
                       <td> {{bill.MobileData.employee.name}}</td>
                       <td> {{bill.MobileData.employee.HrCode}}</td>
-                      <td> {{bill.MobileData.employee.branchId}}</td>
+                      <td> {{bill.MobileData.Branch.name}}</td>
                       <td> {{bill.MobileData.mobileNumber}}</td>
                       <td> {{bill.TotalAfterTax}}</td>
                       <td> {{bill.MobileData.provider.name}}</td>

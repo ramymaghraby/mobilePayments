@@ -7,9 +7,6 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgSelectModule} from '@ng-select/ng-select';
-import { DataTablesModule } from 'angular-datatables';
-import { ModalModule } from 'ngx-bootstrap/modal';
-
 
 import {
   MatDialogModule,
@@ -76,6 +73,8 @@ import { AccountsReportComponent } from '@pages/reports/accounts-report/accounts
 import { ServiceProvidersComponent } from '@masterData/service-providers/service-providers.component';
 // tslint:disable-next-line: max-line-length
 import { AddEditServiceProviderComponent } from '@masterData/service-providers/add-edit-service-provider/add-edit-service-provider.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -134,8 +133,7 @@ import { AddEditServiceProviderComponent } from '@masterData/service-providers/a
     NgSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    DataTablesModule,
-    ModalModule.forRoot()
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     DashboardComponent,
