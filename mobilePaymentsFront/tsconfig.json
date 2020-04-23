@@ -3,16 +3,37 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"],
-      "@config/*": ["app/_config/*"],
-      "@environment/*": ["environments/*"],
-      "@shared/*": ["app/_shared/*"],
-      "@helpers/*": ["helpers/*"],
-      "@services/*": ["src/app/services/*"],
-      "@models/*": ["src/app/models/*"],
-      "@masterData/*": ["src/app/pages/master-data/*"],
-      "@pages/*": ["src/app/pages/*"]
-  },
+      "@app/*": [
+        "app/*"
+      ],
+      "@config/*": [
+        "app/_config/*"
+      ],
+      "@environment/*": [
+        "environments/*"
+      ],
+      "@shared/*": [
+        "app/_shared/*"
+      ],
+      "@helpers/*": [
+        "helpers/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@masterData/*": [
+        "src/app/pages/master-data/*"
+      ],
+      "@pages/*": [
+        "src/app/pages/*"
+      ],
+      "jszip": [
+        "node_modules/jszip/dist/jszip.min.js"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

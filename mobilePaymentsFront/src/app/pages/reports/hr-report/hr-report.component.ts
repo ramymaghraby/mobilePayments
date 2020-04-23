@@ -5,7 +5,8 @@ import { BsDatepickerConfig, BsDatepickerViewMode } from 'ngx-bootstrap/datepick
 import { BillDetailsModel } from '@models/bill-data-model';
 import { MobileNumbersDataModel } from '@models/mobile-numbers-data-model';
 import { BillModel } from '@models/bill-model';
-import { ExcelService } from '@services/excel.service';
+
+import { DxDataGridHrReportModel } from '@models/dx-datagrid-hr-report-mode';
 
 @Component({
   selector: 'app-hr-report',
@@ -18,11 +19,10 @@ export class HrReportComponent implements OnInit {
   bsValue: Date = new Date(this.date.getFullYear(), 0);
   minMode: BsDatepickerViewMode = 'month';
   bsConfig: Partial<BsDatepickerConfig>;
-
+  DxDsHr: DxDataGridHrReportModel[];
   constructor(
     private BillService: BillsService,
-    private MobileNumberService: MobileNumberDataService,
-    private excelService: ExcelService
+    private MobileNumberService: MobileNumberDataService
   ) {
     this.bsConfig = Object.assign({}, {
       minMode : this.minMode,
@@ -36,42 +36,34 @@ export class HrReportComponent implements OnInit {
 
   onValueChange(value: Date): void {
     this.date = value;
-    this.bills = [];
     this.getBillsByChoosenDate(this.date);
   }
 
   getBillsByChoosenDate(choosedDate: Date) {
     return this.BillService.getBillsByDate(choosedDate).subscribe((allBills: BillModel[]) => {
       let i = 0;
+      const TempDsArray: any = [];
       allBills.forEach((billEle: BillModel) => {
         this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe( (MobileData: MobileNumbersDataModel) => {
-          allBills[i].MobileData = MobileData;
+          // allBills[i].MobileData = MobileData;
           i++;
+          // tslint:disable-next-line: one-variable-per-declaration
+          const TempDs = new DxDataGridHrReportModel();
+          TempDs.HrCode = MobileData.employee.HrCode;
+          TempDs.Location = MobileData.employee.branch.name;
+          TempDs.amount = billEle.TotalAfterTax;
+          TempDs.employeeName = MobileData.employee.name;
+          TempDs.mobileNumber = MobileData.mobileNumber;
+          TempDs.provider = MobileData.provider.name;
+          TempDsArray.push(TempDs);
           if (i === allBills.length) {
-            this.bills = allBills;
+            // this.bills = allBills;
+            this.DxDsHr = TempDsArray;
           }
         });
       });
     });
   }
 
-  exportAsXLSX(): void {
-    const excel: BillDetailsModel[] = this.bills;
-    excel.forEach(bill => {
-      bill.employeename = bill.MobileData.employee.name;
-      bill.HrCode = bill.MobileData.employee.HrCode;
-      bill.Branch = bill.MobileData.employee.branch.name;
-      bill.MobileNumber = bill.MobileData.mobileNumber;
-      bill.Total = bill.TotalAfterTax;
-      bill.Provider = bill.MobileData.provider.name;
-      // delete bill.MobileData;
-      delete bill.IntlCharge;
-      delete bill.RoamCharge;
-      delete bill.mobileNumberId;
-      delete bill.month;
-      console.log(bill);
-    });
-    this.excelService.exportAsExcelFile(excel, 'HR_Report_');
-  }
 
 }

@@ -74,8 +74,7 @@ import { ServiceProvidersComponent } from '@masterData/service-providers/service
 // tslint:disable-next-line: max-line-length
 import { AddEditServiceProviderComponent } from '@masterData/service-providers/add-edit-service-provider/add-edit-service-provider.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { DxDataGridModule } from 'devextreme-angular';
 
 @NgModule({
   exports: [
@@ -133,7 +132,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    DxDataGridModule
   ],
   declarations: [
     DashboardComponent,
