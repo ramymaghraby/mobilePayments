@@ -67,10 +67,6 @@ export class ImportComponent implements OnInit {
 
   ngOnInit() {
     this.missingNumbersinDB = [];
-    // this.date = new Date();
-    // this.date.setMonth(this.date.getMonth() - 1 );
-    // this.date.setHours(2, 0, 0, 0);
-    // this.date.setDate(1);
     this.importData = [];
     this.dataSource = new MatTableDataSource(this.importData);
     this.dataSource.paginator = this.paginator;
@@ -261,7 +257,7 @@ export class ImportComponent implements OnInit {
   }
 
   onValueChange(value: Date): void {
-    value.setHours(this.date.getHours());
+    value.setHours(2);
     this.date = value;
   }
 

@@ -45,9 +45,7 @@ export class HrReportComponent implements OnInit {
       const TempDsArray: any = [];
       allBills.forEach((billEle: BillModel) => {
         this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe( (MobileData: MobileNumbersDataModel) => {
-          // allBills[i].MobileData = MobileData;
           i++;
-          // tslint:disable-next-line: one-variable-per-declaration
           const TempDs = new DxDataGridHrReportModel();
           TempDs.HrCode = MobileData.employee.HrCode;
           TempDs.Location = MobileData.employee.branch.name;
@@ -57,13 +55,10 @@ export class HrReportComponent implements OnInit {
           TempDs.provider = MobileData.provider.name;
           TempDsArray.push(TempDs);
           if (i === allBills.length) {
-            // this.bills = allBills;
             this.DxDsHr = TempDsArray;
           }
         });
       });
     });
   }
-
-
 }
