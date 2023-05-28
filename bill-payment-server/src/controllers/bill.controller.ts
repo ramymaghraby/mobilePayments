@@ -47,6 +47,9 @@ export class BillController {
     })
     bill: Omit<Bill, 'id'>,
   ): Promise<Bill> {
+    var date = new Date(bill.month);
+    date.setHours(2,0,0)
+    bill.month = date;
     return this.billRepository.create(bill);
   }
 

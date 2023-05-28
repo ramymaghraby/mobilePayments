@@ -1,3 +1,4 @@
+import { DeptCodeModel } from './dept-code-model';
 import { MobileNumbersDataModel } from './mobile-numbers-data-model';
 
 export class BillModel {
@@ -10,4 +11,5 @@ export class BillModel {
   TotalAfterTax: number;
   mobileNumberId: number;
   MobileData: MobileNumbersDataModel;
+  deptCode: DeptCodeModel;
 }

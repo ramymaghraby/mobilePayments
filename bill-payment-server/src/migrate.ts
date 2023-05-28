@@ -15,6 +15,7 @@ export async function migrate(args: string[]) {
       'Employee',
       'RatePlan',
       'DeptCode',
+      'Provider',
       'VodafoneAccount',
       'InternetPackage',
       'Provider',

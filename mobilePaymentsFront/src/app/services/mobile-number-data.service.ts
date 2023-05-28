@@ -26,6 +26,7 @@ export class MobileNumberDataService {
   getAllMobileNumbersWithData() {
     return this.http.get(environment.api + 'mobile-numbers-with-relation');
   }
+
   putMobileNumber(mobileNumber: MobileNumbersModel) {
     return this.http.put(environment.api + 'mobile-numbers/' + mobileNumber.id, mobileNumber, {observe: 'response'});
   }
