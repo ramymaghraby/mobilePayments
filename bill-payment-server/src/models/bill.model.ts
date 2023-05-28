@@ -31,7 +31,7 @@ export class Bill extends Entity {
     type: 'date',
     required: true,
   })
-  month: string;
+  month: Date;
 
   @property({
     type: 'number',
