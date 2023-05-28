@@ -1,4 +1,4 @@
-import {BillPaymentServerApplication} from './application';
+import { BillPaymentServerApplication } from './application';
 
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
@@ -18,6 +18,7 @@ export async function migrate(args: string[]) {
       'Provider',
       'VodafoneAccount',
       'InternetPackage',
+      'Provider',
       'MobileNumber',
       'ExtraPackage',
       'Bill',

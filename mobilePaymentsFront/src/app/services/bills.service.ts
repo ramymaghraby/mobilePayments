@@ -18,7 +18,7 @@ export class BillsService {
   postBill(bill: BillModel) {
     return this.http.post(environment.api + 'bills', bill);
   }
-  getBillsByDate(date) {
+  getBillsByDate(date: Date) {
     return this.http.get(environment.api + 'bills?filter[where][month]=' + date);
   }
 }
