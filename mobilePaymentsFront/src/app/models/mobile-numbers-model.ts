@@ -5,9 +5,6 @@ export class MobileNumbersModel {
   id: number;
   mobileNumber: string;
   simCardNumber: string;
-  companyAccount: boolean;
-  personalAccount: boolean;
-  splitAccount: boolean;
   ratePlanId: number;
   vodafoneAccountId: number;
   employeeId: number;
