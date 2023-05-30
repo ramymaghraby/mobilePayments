@@ -106,7 +106,17 @@ export class MobileNumbersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: MobileNumbersModel ) => {
       if (result) {
-        this.mobileNumbersSrv.putMobileNumber(result).subscribe(res => {
+        let saveData: MobileNumbersModel = new MobileNumbersModel();
+        saveData.accountPaymentTypeId = result.accountPaymentTypeId
+        saveData.deptCodeId = result.deptCodeId
+        saveData.employeeId = result.employeeId
+        saveData.id = result.id
+        saveData.mobileNumber = result.mobileNumber
+        saveData.providerId = result.providerId
+        saveData.ratePlanId = result.ratePlanId
+        saveData.simCardNumber = result.simCardNumber
+        saveData.vodafoneAccountId = result.vodafoneAccountId
+        this.mobileNumbersSrv.putMobileNumber(saveData).subscribe(res => {
           if (res.status === 204) {
             this.putSucceedToastr(result.mobileNumber);
             this.getAllMobileNumbers();
