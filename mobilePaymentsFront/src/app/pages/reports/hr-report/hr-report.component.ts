@@ -41,22 +41,77 @@ export class HrReportComponent implements OnInit {
 
   getBillsByChoosenDate(choosedDate: Date) {
     return this.BillService.getBillsByDate(choosedDate).subscribe((allBills: BillModel[]) => {
+      // const tempDsArray: any = [];
+      // const tempDs = new DxDataGridHrReportModel();
+      // console.log(allBills);
+      //   allBills.map((billsData, i) => {
+      //     if (billsData.mobileNumber.accountPaymentTypeId !== 1) {
+      //       console.log(i)
+      //       tempDs.HrCode = billsData.mobileNumber.employee.HrCode;
+      //       tempDs.Location = billsData.mobileNumber.employee.branch.name;
+      //       tempDs.amount = billsData.TotalAfterTax;
+      //       tempDs.employeeName = billsData.mobileNumber.employee.name;
+      //       tempDs.mobileNumber = billsData.mobileNumber.mobileNumber;
+      //       tempDs.provider = billsData.mobileNumber.provider.name;
+      //       tempDsArray.push(tempDs);
+      //     } else {
+      //       console.log ('no');
+      //     }
+      //     this.DxDsHr.push(tempDsArray);
+      //   })
+
+      // allBills.map(billsData => {
+      //   if (billsData.mobileNumber.accountPaymentType) {
+      //     console.log("IF")
+      //     this.DxDsHr.map(dxData => {
+      //       dxData.HrCode = billsData.mobileNumber.employee.HrCode;
+      //       dxData.Location = billsData.mobileNumber.employee.branch.name;
+      //       dxData.amount = billsData.TotalAfterTax;
+      //       dxData.employeeName = billsData.mobileNumber.employee.name;
+      //       dxData.mobileNumber = billsData.mobileNumber.mobileNumber;
+      //       dxData.provider = billsData.mobileNumber.provider.name
+      //       })
+      //   } else {
+      //     console.log('a7a');
+
+      //   }
+      // })
+
+
+
       let i = 0;
-      const TempDsArray: any = [];
+      const tempDsArray: any = [];
       allBills.forEach((billEle: BillModel) => {
-        this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe( (MobileData: MobileNumbersDataModel) => {
-          i++;
+        i++;
+        if (billEle.mobileNumber.accountPaymentTypeId === 2) {
           const TempDs = new DxDataGridHrReportModel();
-          TempDs.HrCode = MobileData.employee.HrCode;
-          TempDs.Location = MobileData.employee.branch.name;
+          TempDs.HrCode = billEle.mobileNumber.employee.HrCode;
+          TempDs.Location = billEle.mobileNumber.employee.branch.name;
           TempDs.amount = billEle.TotalAfterTax;
-          TempDs.employeeName = MobileData.employee.name;
-          TempDs.mobileNumber = MobileData.mobileNumber;
-          TempDs.provider = MobileData.provider.name;
-          TempDsArray.push(TempDs);
-          if (i === allBills.length) {
-            this.DxDsHr = TempDsArray;
+          TempDs.employeeName = billEle.mobileNumber.employee.name;
+          TempDs.mobileNumber = billEle.mobileNumber.mobileNumber;
+          TempDs.provider = billEle.mobileNumber.provider.name;
+          tempDsArray.push(TempDs);
+        } else {
+          if (billEle.mobileNumber.accountPaymentTypeId === 3) {
+            const TempDs = new DxDataGridHrReportModel();
+            TempDs.HrCode = billEle.mobileNumber.employee.HrCode;
+            TempDs.Location = billEle.mobileNumber.employee.branch.name;
+            TempDs.amount = billEle.TotalAfterTax - 60.00;
+            TempDs.amount.toPrecision(2);
+            // console.log( billEle.TotalAfterTax - 6);
+            TempDs.employeeName = billEle.mobileNumber.employee.name;
+            TempDs.mobileNumber = billEle.mobileNumber.mobileNumber;
+            TempDs.provider = billEle.mobileNumber.provider.name;
+            tempDsArray.push(TempDs);
           }
+        }
+
+          if (i === allBills.length) {
+            this.DxDsHr = tempDsArray;
+          }
+        this.MobileNumberService.getMobileNumberData(billEle.mobileNumberId).subscribe( (MobileData: MobileNumbersDataModel) => {
+
         });
       });
     });
