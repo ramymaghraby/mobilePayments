@@ -161,16 +161,16 @@ import { DxDataGridModule } from 'devextreme-angular';
     AccountsReportComponent,
     ServiceProvidersComponent
     ],
-    entryComponents: [
-    EditBillComponent,
-    AddEditVodafoneAccountComponent,
-    AddEditRatePlanComponent,
-    AddEditDepartmentComponent,
-    AddEditEmployeeComponent,
-    AddEditMobileNumberComponent,
-    AddEditDeptCodeComponent,
-    AddEditBranchComponent,
-    AddEditServiceProviderComponent
-  ]
+  //   entryComponents: [
+  //   EditBillComponent,
+  //   AddEditVodafoneAccountComponent,
+  //   AddEditRatePlanComponent,
+  //   AddEditDepartmentComponent,
+  //   AddEditEmployeeComponent,
+  //   AddEditMobileNumberComponent,
+  //   AddEditDeptCodeComponent,
+  //   AddEditBranchComponent,
+  //   AddEditServiceProviderComponent
+  // ]
 })
 export class AdminLayoutModule {}
