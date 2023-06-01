@@ -6,7 +6,7 @@ describe('VodafoneAccountsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: VodafoneAccountsService = TestBed.get(VodafoneAccountsService);
+    const service: VodafoneAccountsService = TestBed.inject(VodafoneAccountsService);
     expect(service).toBeTruthy();
   });
 });

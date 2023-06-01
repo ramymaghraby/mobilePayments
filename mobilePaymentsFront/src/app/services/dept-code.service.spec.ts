@@ -6,7 +6,7 @@ describe('DeptCodeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DeptCodeService = TestBed.get(DeptCodeService);
+    const service: DeptCodeService = TestBed.inject(DeptCodeService);
     expect(service).toBeTruthy();
   });
 });
