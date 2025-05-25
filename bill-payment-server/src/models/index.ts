@@ -10,3 +10,4 @@ export * from './bill.model';
 export * from './dept-code.model';
 export * from './account-payment-type.model';
 export * from './provider.model';
+export * from './bill-query.model';

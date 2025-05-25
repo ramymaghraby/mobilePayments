@@ -17,7 +17,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import { Bill } from '../models';
+import { Bill, BillQuery } from '../models';
 import { BillRepository } from '../repositories';
 
 export class BillController {
@@ -81,7 +81,7 @@ export class BillController {
   })
   async find(
     @param.query.object('filter', getFilterSchemaFor(Bill)) filter?: Filter<Bill>,
-  ): Promise<Bill[]> {
+  ): Promise<Bill[]> {    
     return this.billRepository.find(filter);
   }
 
@@ -97,14 +97,54 @@ export class BillController {
       },
     },
   })
+
+  // async findBillsWithParamQuery(
+  //   @param.query.object('filter', getWhereSchemaFor(Bill)) filter?: BillQuery,
+  // ): Promise<Bill[]> {
+  //   let Bills: Bill[] = [];
+  //   console.log(filter?.month);
+  //   console.log(filter);
+    
+   
+  //   const result =  await this.billRepository.execute(
+  //     `SELECT e.name,e.HrCode, br.name,m.mobileNumber, b.totalAfterTax FROM vodafonetest.bill b 
+  //   join vodafonetest.mobilenumber m on m.id = b.mobileNumberId 
+  //   join vodafonetest.employee e on e.id = m.employeeId
+  //   join vodafonetest.branch br on e.branchId = br.id
+  //   where m.accountPaymentTypeId = ? and b.month = ?`, [filter?.type,filter?.month],);
+    
+  //   console.log(result);
+  //   return Bills;
+  //   // return this.billRepository.find(filter);
+  // }
+
+  // Original
+
   async findBillsWithAllRelation(
     @param.query.object('filter', getFilterSchemaFor(Bill)) filter?: Filter<Bill>,
-  ): Promise<Bill[]> {
-    const filterer = {
-      filter,
-      include: [{ relation: 'mobileNumber' }],
-    };
-    return this.billRepository.find(filterer);
+  ): Promise<Bill[]> { 
+    filter =  {
+      where: filter?.where,
+      include: [
+        { 
+          relation: 'mobileNumber',
+          scope: {
+            include: [
+              {relation: 'accountPaymentType'},
+              {
+                relation: 'employee',
+              scope: {
+                include: [
+                  {relation: 'branch'}
+                ]
+              }},
+              {relation: 'provider'}
+            ]
+          }
+        }
+      ],
+    };    
+    return this.billRepository.find(filter);
   }
   @patch('/bills', {
     responses: {

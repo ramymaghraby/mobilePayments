@@ -19,6 +19,9 @@ export class BillsService {
     return this.http.post(environment.api + 'bills', bill);
   }
   getBillsByDate(date: Date) {
-    return this.http.get(environment.api + 'bills?filter[where][month]=' + date);
+    return this.http.get(environment.api + '/bills-with-mobile-numbers-data?filter[where][month]=' + date);
+  }
+  getBillsforHRByDate(date: Date){
+    return this.http.get(environment.api + 'bills?filter[where][and][0][month]='+date+'&filter[where][and][1][content]=Hello')
   }
 }
